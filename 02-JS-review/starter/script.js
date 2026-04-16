@@ -85,7 +85,7 @@ const data = [
     publicationDate: "1997-06-26",
     author: "J. K. Rowling",
     genres: ["fantasy", "adventure"],
-    hasMovieAdaptation: true,
+    hasMovieAdaptation: false,
     pages: 223,
     translations: {
       spanish: "Harry Potter y la piedra filosofal",
@@ -142,3 +142,192 @@ function getBooks() {
 function getBook(id) {
   return data.find((d) => d.id === id);
 }
+
+/*
+// ------------------- Destructuring + rest and spread
+
+const book = getBook(3);
+book;
+// const title = book.title;
+// const author = book.author;
+
+const { title, author, pages, publicationDate, genres, hasMovieAdaptation } =
+  book; //Destructuring objects
+
+author;
+title;
+
+console.log(author, title, genres);
+
+// const primaryGenre = genres[0];
+// const secondaryGenre = genres[1];
+
+const [primaryGenre, secondaryGenre, ...otherGenres] = genres; // Destructuring arrays & rest operator
+// rest operator must be last
+console.log(primaryGenre, secondaryGenre, otherGenres);
+
+// rest operator and spread operator looks similar ( using ... )
+
+const newGenres = [...genres, "epic fantasy"]; // spread operator (spread the array 'genres')
+newGenres;
+
+const updatedBook = {
+  ...book,
+  // Adding a new property
+  moviePublicationDate: "2001-12-19",
+  // Overwriting an existing property
+  pages: 1210,
+}; // spread operator on objects, we can also update stuff, such as with pages here because it overwrites the previous one.
+updatedBook;
+
+// -------------- Arrow functions
+
+// regular function:
+// function getYear(str) {
+//   return str.split("-")[0];
+// }
+const getYear = (str) => str.split("-")[0];
+
+// -------------- template literals
+const summary = `${title}, a ${pages}-page long book, was written by ${author} and published in ${getYear(publicationDate)}. The book has ${hasMovieAdaptation === true ? "" : "not"} been adapted as a movie.`;
+summary;
+
+// -------------- ternary operators
+const pagesRange = pages > 1000 ? "over a thousand" : "less than a thousand";
+pagesRange;
+console.log(`The book has ${pagesRange} pages`);
+
+// -------------- Short-circuiting and logical operators: &&, ||, ??
+console.log(true && "Some string"); // And operator will return second value
+console.log(false && "Some String"); // will short circuit if first value is false
+console.log(hasMovieAdaptation && "this book has a movie");
+
+// falsly value: 0, '', null, undefined
+console.log("jonas" && "some string");
+console.log(0 && "some String"); // short circuit to falsly value
+
+console.log(true || "someString"); // short circuit to first value
+console.log(false || "someString"); // if first value is false, short circuit to second value
+
+// const spanishTranslation = book.translations.spanish || "NOT TRANSLATED";
+// spanishTranslation;
+
+// const countWrong = book.reviews.librarything.reviewsCount || "NO DATA";
+// countWrong; // But it should output 0 here... 0 is a falsly number
+
+// // Nullish operator : similar to or
+// const countRight = book.reviews.librarything.reviewsCount ?? "NO DATA";
+// countRight; // Nullish will only return the second value when the first value is null and undefined but not when it is 0 or an empty string.
+
+// ----------- Optional chaining
+function getTotalReviewCount(book) {
+  const goodread = book.reviews.goodreads?.reviewsCount ?? 0;
+  const libraryanything = book.reviews.librarything?.reviewsCount ?? 0; // what if librarything is not available?? we use optional chaining.
+  libraryanything;
+  return goodread + libraryanything;
+}
+console.log(getTotalReviewCount(book));
+
+*/
+
+/*
+function getTotalReviewCount(book) {
+  const goodread = book.reviews.goodreads?.reviewsCount ?? 0;
+  const libraryanything = book.reviews.librarything?.reviewsCount ?? 0; // what if librarything is not available?? we use optional chaining.
+  libraryanything;
+  return goodread + libraryanything;
+}
+
+// ------------ Array map method
+const books = getBooks();
+books;
+
+const x = [1, 2, 3, 4, 5].map((el) => el * 2);
+console.log(x);
+
+const titles = books.map((book) => book.title);
+titles;
+
+const essentialData = books.map((book) => ({
+  title: book.title,
+  author: book.author,
+  reviewsCount: getTotalReviewCount(book),
+}));
+
+essentialData;
+
+// --------- Array filter method
+
+const longBooksWithMovie = books
+  .filter((book) => book.pages > 500)
+  .filter((book) => book.hasMovieAdaptation);
+
+console.log(longBooksWithMovie);
+
+const adventureBooks = books
+  .filter((books) => books.genres.includes("adventure"))
+  .map((book) => book.title);
+
+adventureBooks;
+
+// ---------- Array reduce method
+const pagesAllBooks = books.reduce((sum, book) => sum + book.pages, 0);
+pagesAllBooks;
+
+// ---------- Array sort method
+const arr = [3, 7, 1, 9, 6];
+const sorted = arr.sort((a, b) => a - b);
+sorted;
+arr; // sort function mutated the original arr
+
+const sortedDes = arr.slice().sort((a, b) => b - a); // to make it not mutate the original array.
+sortedDes;
+arr;
+
+const sortedByPages = books
+  .slice()
+  .sort((a, b) => b.pages - a.pages)
+  .map((book) => book.title);
+sortedByPages;
+
+// ---------- Working with immubtable arrays
+
+// 1) add a book object to array
+const newBook = {
+  id: 6,
+  title: "Harry Potter and the chamber of secrets",
+  author: "J. K. Rowling",
+};
+
+const booksAfterAdd = [...books, newBook];
+booksAfterAdd;
+
+// 2) Delete a book object from array,
+const booksAfterDelete = booksAfterAdd.filter((book) => book.id !== 3);
+booksAfterDelete;
+
+// 3) Update book objects in the array
+const booksAfterUpdate = booksAfterDelete.map((book) =>
+  book.id === 1 ? { ...book, pages: 123485 } : book,
+);
+booksAfterUpdate;
+*/
+
+// Java asynchronous function
+
+// using fetch.then.then
+// fetch("https://jsonplaceholder.typicode.com/todos/1")
+//   .then((res) => res.json())
+//   .then((data) => console.log(data));
+
+// console.log("jonas");
+
+// THis is the same thing as before, just with better syntax.
+async function getTodos() {
+  const res = await fetch("https://jsonplaceholder.typicode.com/todos/1");
+  const data = await res.json();
+  console.log(data);
+}
+
+getTodos();
+console.log("jonas");
